@@ -24,111 +24,57 @@
     </div>
   </header>
 
-  <br>
-
   <div class="container-fluid">
     <div class=row>
       <div class="col-md-3 pl-2">
         <div class="card" style="width: 22rem;">
           <div class="card-body">
             <h6>Search for a City:</h6>
-            <form class="form-inline">
-              <div class="form-group">
-                <input type="text" class="form-control" id="city-input">
-              </div>
-              <button type="button" class="btn btn-primary">Submit</button>
-            </form>
+            <div class="form-group">
+              <input type="text" class="form-control" id="city-input">
+            </div>
+            <button id="search-button" class="btn btn-primary">Submit</button>
           </div>
         </div>
         <div>
           <ul id="city-list" class="list-group"></ul>
         </div>
       </div>
-      <div class="col-md-9">
-        <div id="current-weather" class='card'>
-          <div class="card-body">
-            <div id="city-date-icon">
-              <span id='city-name'>
-              </span>
-              <span id='current-icon'></span>
-            </div>
-            <p class="card-text" id="current-temp"></p>
-            <p class="card-text" id="current-humidity"></p>
-            <p class="card-text" id="current-wind"></p>
-            <p class="card-text" id="current-uv"></p>
-            </ul>
-          </div>
-        </div>
-        <div class="row">
-          <div id="forecast-weather" class="col-md-9">
-            <h4>5-Day Forecast:</h4>
-            <div id="forecast-cards">
-              <div class="card forecast">
-                <div id="forecast1" class="card-body">
-                  <span class="card-title" id='forecast-date1'>
-                  </span>
-                  <span id='forecast-icon1'></span>
-                  <p class="card-text" id="forecast-temp1"></p>
-                  <p class="card-text" id="forecast-humidity1"></p>
-                </div>
-              </div>
-              <div class="card forecast">
-                <div id="forecast2" class="card-body">
-                  <span class="card-title" id='forecast-date2'>
-                  </span>
-                  <span id='forecast-icon2'></span>
-                  <p class="card-text" id="forecast-temp2"></p>
-                  <p class="card-text" id="forecast-humidity2"></p>
-                </div>
-              </div>
-              <div class="card forecast">
-                <div id="forecast3" class="card-body">
-                  <span class="card-title" id='forecast-date3'>
-                  </span>
-                  <span id='forecast-icon3'></span>
-                  <p class="card-text" id="forecast-temp3"></p>
-                  <p class="card-text" id="forecast-humidity3"></p>
-                </div>
-              </div>
-              <div class="card forecast">
-                <div id="forecast4" class="card-body">
-                  <span class="card-title" id='forecast-date4'>
-                  </span>
-                  <span id='forecast-icon4'></span>
-                  <p class="card-text" id="forecast-temp4"></p>
-                  <p class="card-text" id="forecast-humidity4"></p>
-                </div>
-              </div>
-              <div class="card forecast">
-                <div id="forecast5" class="card-body">
-                  <span class="card-title" id='forecast-date5'>
-                  </span>
-                  <span id='forecast-icon5'></span>
-                  <p class="card-text" id="forecast-temp5"></p>
-                  <p class="card-text" id="forecast-humidity5"></p>
-                </div>
-              </div>
-            </div>
+      <div class="col-10">
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-4">What's in the forecast?</h1>
+            <!-- <div id="icon"><img id="wicon" src="" alt="Weather icon"></div> -->
+            <p class="lead city">Enter city by name to see today's weather and get your five day forecast.
+            </p>
+            <p class="lead wind">Wind</p>
+            <p class="lead humidity">Humidity</p>
+            <p class="lead temp">Temp F°</p>
+            <p class="lead uv-index">UV Index: <span class="badge" id="current-uv-level"></span></p>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+
+      <div class="card-deck" id="card-deck">
+
+      </div>
 
 
-  <!-- Optional JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="script.js"></script>
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-    crossorigin="anonymous"></script>
+
+
+      <!-- Optional JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="script.js"></script>
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
