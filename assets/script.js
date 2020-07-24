@@ -1,5 +1,6 @@
 $(document).ready(function () {
   var appID = "3e684ec40d1ec38b4ab47574d4baeb20";
+  var cityArray = [];
   getFromLocalStorage();
 
   //For Loop to create forecast days
@@ -24,8 +25,13 @@ $(document).ready(function () {
   });
 
   //city input is added to local storage
-  var cityArray = [];
   function storeCity(city) {
+    if (localStorage.getItem("cities") !== null) {
+    var cities = JSON.parse(window.localStorage.getItem("cities"));
+    for (var i = 0; i < cities.length; i++) {
+      cityArray.push(cities[i])
+    } 
+  }
     cityArray.push(city);
     localStorage.setItem("cities", JSON.stringify(cityArray));
     getFromLocalStorage();
@@ -33,16 +39,18 @@ $(document).ready(function () {
 
   //refresh the page and saved information stays in place
   function getFromLocalStorage() {
+    console.log(cityArray)
     if (localStorage.getItem("cities") !== null) {
       //Clear out city list div
       $("#city-list").html("");
       var cities = JSON.parse(window.localStorage.getItem("cities"));
       for (var i = 0; i < cities.length; i++) {
-        var cityMarkup = `<li class="city-item" data-city="${cities[i]}">${cities[i]}</li>`;
+        var cityMarkup = `<button type="button" class="city-item btn btn-light" data-city="${cities[i]}">${cities[i]}</button>`
         $("#city-list").append(cityMarkup);
       }
     }
   }
+
 
   function getCurrentWeather(city) {
     var url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appID}`;
@@ -54,9 +62,8 @@ $(document).ready(function () {
       addCurrentWeatherInfo(response);
     });
   }
-//manipulating the DOM
+  //manipulating the DOM for current weather
   function addCurrentWeatherInfo(obj) {
-    console.log(obj)
     $("#current-wind").html("");
     $("#current-wind").append(obj.wind.speed);
     $("#current-humidity").html("");
@@ -68,11 +75,12 @@ $(document).ready(function () {
     $("#current-icon").html("");
     $("#current-icon").attr("src", iconURL);
 
-
+    //Make calls for UV index and 5 Day Forecast
     getCurrentUV(obj.coord.lat, obj.coord.lon);
     getForecastWeather(obj.coord.lat, obj.coord.lon);
   }
 
+  //Call for current UV index
   function getCurrentUV(lat, lon) {
     var url = `http://api.openweathermap.org/data/2.5/uvi?appid=${appID}&lat=${lat}&lon=${lon}`;
     $.ajax({
@@ -109,16 +117,18 @@ $(document).ready(function () {
       uvColor = "purple"; //purple
     }
 
-    //reset divs
+    //reset UV index divs
     $("#current-uv-level").html("");
     $("#current-uv-level").removeClass(
       "btn-success btn-warning orange btn-danger purple"
     );
+
     //add UV info
     $("#current-uv-level").addClass(uvColor);
     $("#current-uv-level").append(uvIndex);
   }
 
+  //Call to get 5 Day Forecast
   function getForecastWeather(lat, lon) {
     var url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${appID}`;
     $.ajax({
@@ -128,16 +138,18 @@ $(document).ready(function () {
       addFiveDayForecast(response);
     });
   }
-  // target the day 5 blocks
+
+  //Add 5 Day Forecast to the DOM
   function addFiveDayForecast(obj) {
-    console.log(obj);
     for (var i = 0; i < 5; i++) {
       var icon = obj.daily[i].weather[0].icon;
       var iconURL = `http://openweathermap.org/img/wn/${icon}.png`;
       $(`#card-day${i + 1}-icon`).html("");
       $(`#card-day${i + 1}-icon`).attr("src", iconURL);
       $(`#card-day${i + 1}-temp`).html("");
-      $(`#card-day${i + 1}-temp`).append(temperatureConverter(obj.daily[i].temp.max));
+      $(`#card-day${i + 1}-temp`).append(
+        temperatureConverter(obj.daily[i].temp.max)
+      );
 
       $(`#card-day${i + 1}-humidity`).html("");
       $(`#card-day${i + 1}-humidity`).append(obj.daily[i].humidity);
@@ -150,13 +162,11 @@ $(document).ready(function () {
     var calcTemp = valNum * 1.8 - 459.67;
     return Math.round(calcTemp);
   }
+
+  $(".city-item").click(function () {
+    var city = $(this).attr("data-city");
+    getCurrentWeather(city)
+  });
 });
 
-//selected city gets fed into weather api as a parameter
-//receive object from weather api
-//look through object for the weather data
-//append data to DOM
-//5 day forecast
 
-//icons for weather
-//update styling and html
