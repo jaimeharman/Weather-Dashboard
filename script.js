@@ -8,9 +8,9 @@ $(document).ready(function () {
         <div class="card" id="card-day${i}">
         <div class="card-body">
           <h5 class="card-title" id="card-day${i}-date">Day ${i}</h5>
-          <div id="card-day${i}-icon"></div>
-          <p>Temp:<span id="card-day${i}-temp"></span></p>
-          <p>Humidity:<span id="card-day${i}-humidity"></span></p>
+          <img id="card-day${i}-icon">
+          <p>Temp:&nbsp;<span id="card-day${i}-temp"></span>°F</p>
+          <p>Humidity:&nbsp;<span id="card-day${i}-humidity"></span>%</p>
         </div>
       </div>`;
     $("#card-deck").append(cardMarkup);
@@ -23,7 +23,7 @@ $(document).ready(function () {
     getCurrentWeather(city);
   });
 
-  //City input is added to local storage
+  //city input is added to local storage
   var cityArray = [];
   function storeCity(city) {
     cityArray.push(city);
@@ -54,17 +54,23 @@ $(document).ready(function () {
       addCurrentWeatherInfo(response);
     });
   }
-
+//manipulating the DOM
   function addCurrentWeatherInfo(obj) {
+    console.log(obj)
     $("#current-wind").html("");
     $("#current-wind").append(obj.wind.speed);
     $("#current-humidity").html("");
     $("#current-humidity").append(obj.main.humidity);
     $("#current-temp").html("");
     $("#current-temp").append(temperatureConverter(obj.main.temp));
+    var icon = obj.weather[0].icon;
+    var iconURL = `http://openweathermap.org/img/wn/${icon}.png`;
+    $("#current-icon").html("");
+    $("#current-icon").attr("src", iconURL);
+
 
     getCurrentUV(obj.coord.lat, obj.coord.lon);
-    getForecastWeather(obj.coord.lat, obj.coord.lon)
+    getForecastWeather(obj.coord.lat, obj.coord.lon);
   }
 
   function getCurrentUV(lat, lon) {
@@ -79,7 +85,6 @@ $(document).ready(function () {
 
   //uv index button/color
   function addCurrentUVInfo(obj) {
-
     var uvIndex = obj.value;
     var uvIndexRounded = Math.floor(uvIndex);
     var uvColor;
@@ -115,31 +120,34 @@ $(document).ready(function () {
   }
 
   function getForecastWeather(lat, lon) {
-    var url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${appID}`
+    var url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${appID}`;
     $.ajax({
       url: url,
       method: "GET",
     }).then(function (response) {
-      addFiveDayForecast(response)
+      addFiveDayForecast(response);
     });
   }
-
+  // target the day 5 blocks
   function addFiveDayForecast(obj) {
-
+    console.log(obj);
     for (var i = 0; i < 5; i++) {
-      console.log(temperatureConverter(obj.daily[i].temp.day))
-      
-      // target the day 5 blocks
-      // wipe each div clean x.html('')
-      //.append() new info
-      // remember i starts at 0, so you'll need to do i + 1 to target the divs
+      var icon = obj.daily[i].weather[0].icon;
+      var iconURL = `http://openweathermap.org/img/wn/${icon}.png`;
+      $(`#card-day${i + 1}-icon`).html("");
+      $(`#card-day${i + 1}-icon`).attr("src", iconURL);
+      $(`#card-day${i + 1}-temp`).html("");
+      $(`#card-day${i + 1}-temp`).append(temperatureConverter(obj.daily[i].temp.max));
+
+      $(`#card-day${i + 1}-humidity`).html("");
+      $(`#card-day${i + 1}-humidity`).append(obj.daily[i].humidity);
     }
   }
 
   //Convert kelvin to fahrenheit
   function temperatureConverter(valNum) {
     valNum = parseFloat(valNum);
-    var calcTemp = (valNum * 1.8) - 459.67;
+    var calcTemp = valNum * 1.8 - 459.67;
     return Math.round(calcTemp);
   }
 });
