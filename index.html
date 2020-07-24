@@ -25,8 +25,8 @@
   </header>
 
   <div class="container-fluid">
-    <div class=row>
-      <div class="col-md-3 pl-2">
+    <div class="row">
+      <div class="col-md-2">
         <div class="card" style="width: 22rem;">
           <div class="card-body">
             <h6>Search for a City:</h6>
@@ -40,34 +40,39 @@
           <ul id="city-list" class="list-group"></ul>
         </div>
       </div>
-      <div class="col-md-9">
-        <div id="current-weather" class="card">
-          <div class="container">
-            <h1 class="display-4">What's in the forecast?</h1>
-            <!-- <div id="icon"><img id="wicon" src="" alt="Weather icon"></div> -->
-            <p class="lead city">Enter city by name to see today's weather and get your five day forecast.
-            </p>
-            <p class="lead wind">Wind<span id="current-wind"></span></p>
-            <p class="lead humidity">Humidity<span id="current-humidity"></span></p>
-            <p class="lead temp">Temp F°<span id="current-temp"></span></p>
-            <p class="lead uv-index">UV Index: <span class="badge" id="current-uv-level"></span></p>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10">
+            <div id="current-weather" class="card">
+              <div class="container">
+                <h1 class="display-4">What's in the forecast?</h1>
+                <p class="lead city">Enter city by name to see today's weather and get your five day forecast.
+                </p>
+                <p class="lead wind">Wind:&nbsp;<span id="current-wind"></span>&nbsp;MPH</p>
+                <p class="lead humidity">Humidity:&nbsp;<span id="current-humidity"></span>%</p>
+                <p class="lead temp">Temp:&nbsp;<span id="current-temp"></span>&nbsp;F°</p>
+                <p class="lead uv-index">UV Index:&nbsp;<span class="badge" id="current-uv-level"></span></p>
+                
+                <div class="card-deck" id="card-deck">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="card-deck" id="card-deck">
-
-      </div>
+    </div>
 
 
 
 
-      <!-- Optional JavaScript -->
-      <script src="https://code.jquery.com/jquery.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-      <script src="script.js"></script>
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-      <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+
+
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

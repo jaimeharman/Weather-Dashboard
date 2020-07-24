@@ -5,3 +5,17 @@
     padding: 10px; 
 }
 
+.card {
+    margin: 20px 0px;  
+    padding: 10px;  
+}
+
+.orange {
+    background-color: orange;
+    color: white; 
+}
+
+.purple {
+    background-color: purple;
+    color: white; 
+}
