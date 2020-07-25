@@ -93,7 +93,7 @@ $(document).ready(function () {
     $("#current-temp").html("");
     $("#current-temp").append(temperatureConverter(obj.main.temp));
     var icon = obj.weather[0].icon;
-    var iconURL = `http://openweathermap.org/img/wn/${icon}.png`;
+    var iconURL = `https://openweathermap.org/img/wn/${icon}.png`;
     $("#current-icon").html("");
     $("#current-icon").attr("src", iconURL);
     $("#city-name").text("City: " + obj.name);
@@ -105,7 +105,7 @@ $(document).ready(function () {
 
   //Call for current UV index
   function getCurrentUV(lat, lon) {
-    var url = `http://api.openweathermap.org/data/2.5/uvi?appid=${appID}&lat=${lat}&lon=${lon}`;
+    var url = `https://api.openweathermap.org/data/2.5/uvi?appid=${appID}&lat=${lat}&lon=${lon}`;
     $.ajax({
       url: url,
       method: "GET",
