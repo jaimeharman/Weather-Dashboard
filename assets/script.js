@@ -1,5 +1,6 @@
 $(document).ready(function () {
   var appID = "3e684ec40d1ec38b4ab47574d4baeb20";
+  //When app starts:
   getFromLocalStorage();
 
   //For Loop to create forecast days
@@ -16,11 +17,20 @@ $(document).ready(function () {
     $("#card-deck").append(cardMarkup);
   }
 
+  //If visiting the page a second time, last city searched is displayed
+  if (localStorage.getItem("cities") !== null) {
+    var cities = JSON.parse(window.localStorage.getItem("cities"));
+    var lastCity = cities[cities.length - 1];
+    getCurrentWeather(lastCity);
+  }
+
+  //Getting user information and populating the app
   //User searches for a city's weather
   $("#city-btn").on("click", function () {
     var city = $("#city-input").val();
-    storeCity(city);
-    getCurrentWeather(city);
+    const cityCapped = city.charAt(0).toUpperCase() + city.slice(1);
+    storeCity(cityCapped);
+    getCurrentWeather(cityCapped);
     $("#city-name").val("");
   });
 
@@ -58,6 +68,7 @@ $(document).ready(function () {
     }
   }
 
+  //Getting the information from OpenWeatherAPI
   function getCurrentWeather(city) {
     var url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appID}`;
     $.ajax({
@@ -178,6 +189,7 @@ $(document).ready(function () {
     return Math.round(calcTemp);
   }
 
+  //Click option to get city data
   $(".city-item").click(function () {
     var city = $(this).attr("data-city");
     getCurrentWeather(city);
