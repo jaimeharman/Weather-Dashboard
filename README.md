@@ -19,3 +19,5 @@ Resources used for this project:
 - jQuery CDN
 
 Screenshot: 
+
+![Weather-Dashboard](assets/images/weatherdashboard.PNG)
