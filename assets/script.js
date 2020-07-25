@@ -1,6 +1,5 @@
 $(document).ready(function () {
   var appID = "3e684ec40d1ec38b4ab47574d4baeb20";
-  var cityArray = [];
   getFromLocalStorage();
 
   //For Loop to create forecast days
@@ -17,40 +16,47 @@ $(document).ready(function () {
     $("#card-deck").append(cardMarkup);
   }
 
-  //user searches for a city's weather
-  $("#search-button").on("click", function () {
+  //User searches for a city's weather
+  $("#city-btn").on("click", function () {
     var city = $("#city-input").val();
     storeCity(city);
     getCurrentWeather(city);
+    $("#city-name").val("");
   });
 
-  //city input is added to local storage
+  //Clears search bar when clicked
+  $("input:text").focus(function () {
+    $(this).val("");
+  });
+
+  //City input is added to local storage
   function storeCity(city) {
+    var cityArray = [];
     if (localStorage.getItem("cities") !== null) {
-    var cities = JSON.parse(window.localStorage.getItem("cities"));
-    for (var i = 0; i < cities.length; i++) {
-      cityArray.push(cities[i])
-    } 
-  }
+      var cities = JSON.parse(window.localStorage.getItem("cities"));
+      for (var i = 0; i < cities.length; i++) {
+        cityArray.push(cities[i]);
+      }
+    }
+
     cityArray.push(city);
+
     localStorage.setItem("cities", JSON.stringify(cityArray));
     getFromLocalStorage();
   }
 
-  //refresh the page and saved information stays in place
+  //Refresh the page and saved information stays in place
   function getFromLocalStorage() {
-    console.log(cityArray)
     if (localStorage.getItem("cities") !== null) {
       //Clear out city list div
       $("#city-list").html("");
       var cities = JSON.parse(window.localStorage.getItem("cities"));
       for (var i = 0; i < cities.length; i++) {
-        var cityMarkup = `<button type="button" class="city-item btn btn-light" data-city="${cities[i]}">${cities[i]}</button>`
+        var cityMarkup = `<button type="button" class="city-item" data-city="${cities[i]}">${cities[i]}</button>`;
         $("#city-list").append(cityMarkup);
       }
     }
   }
-
 
   function getCurrentWeather(city) {
     var url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appID}`;
@@ -58,12 +64,17 @@ $(document).ready(function () {
       url: url,
       method: "GET",
     }).then(function (response) {
-      // $("#").text(JSON.stringify(response));
       addCurrentWeatherInfo(response);
     });
   }
-  //manipulating the DOM for current weather
+
+  //Manipulating the DOM for current weather
   function addCurrentWeatherInfo(obj) {
+    let date = obj.dt;
+    let currentDate = new Date(date * 1000).toLocaleDateString("en-US");
+    console.log(currentDate);
+    $("#currentDate").html("");
+    $("#currentDate").append(currentDate);
     $("#current-wind").html("");
     $("#current-wind").append(obj.wind.speed);
     $("#current-humidity").html("");
@@ -74,6 +85,7 @@ $(document).ready(function () {
     var iconURL = `http://openweathermap.org/img/wn/${icon}.png`;
     $("#current-icon").html("");
     $("#current-icon").attr("src", iconURL);
+    $("#city-name").text("City: " + obj.name);
 
     //Make calls for UV index and 5 Day Forecast
     getCurrentUV(obj.coord.lat, obj.coord.lon);
@@ -91,7 +103,7 @@ $(document).ready(function () {
     });
   }
 
-  //uv index button/color
+  //UV index button/color
   function addCurrentUVInfo(obj) {
     var uvIndex = obj.value;
     var uvIndexRounded = Math.floor(uvIndex);
@@ -117,13 +129,13 @@ $(document).ready(function () {
       uvColor = "purple"; //purple
     }
 
-    //reset UV index divs
+    //Reset UV index divs
     $("#current-uv-level").html("");
     $("#current-uv-level").removeClass(
       "btn-success btn-warning orange btn-danger purple"
     );
 
-    //add UV info
+    //Add UV info
     $("#current-uv-level").addClass(uvColor);
     $("#current-uv-level").append(uvIndex);
   }
@@ -144,6 +156,9 @@ $(document).ready(function () {
     for (var i = 0; i < 5; i++) {
       var icon = obj.daily[i].weather[0].icon;
       var iconURL = `http://openweathermap.org/img/wn/${icon}.png`;
+      let date = obj.daily[i].dt;
+      let dailyDate = new Date(date * 1000).toLocaleDateString("en-US");
+      $(`#card-day${i + 1}-date`).text(dailyDate);
       $(`#card-day${i + 1}-icon`).html("");
       $(`#card-day${i + 1}-icon`).attr("src", iconURL);
       $(`#card-day${i + 1}-temp`).html("");
@@ -165,8 +180,6 @@ $(document).ready(function () {
 
   $(".city-item").click(function () {
     var city = $(this).attr("data-city");
-    getCurrentWeather(city)
+    getCurrentWeather(city);
   });
 });
-
-

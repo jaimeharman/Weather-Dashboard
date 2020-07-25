@@ -1,21 +1,69 @@
-.heading {
-    background-color: #3c3c3c;
-    color: white;
-    text-align: center; 
-    padding: 10px; 
+h1 {
+  background-color: #3c3c3c;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
-.card {
-    margin: 20px 0px;  
-    padding: 10px;  
+#city {
+  background-color: white;
+  margin-top: 20px;
+  border: 1px dashed;
+  border-color: #3c3c3c;
+  margin-bottom: 20px;
 }
 
+#city-btn {
+  background-color: teal;
+}
+
+#city {
+  cursor: pointer;
+  display: block;
+  background-color: #d4e3ef;
+}
+
+.city-row {
+  background-color: #d4e3ef;
+  color: black;
+  padding: 3px;
+  margin: 5px;
+}
+
+#currentDate {
+  padding: 5px;
+}
+
+#city-name {
+  padding: 3px;
+}
+
+.current-temp {
+  margin: 20px;
+  padding: 7px;
+}
+
+#card-deck {
+  padding: 5px;
+  margin: 3px;
+}
+
+.card-body {
+  margin: 2px;
+  background-color: #d4e3ef;
+  padding: 3px;
+  font-size: 16px;
+}
+
+/* UV Orange Button */
 .orange {
-    background-color: orange;
-    color: white; 
+  background-color: orange;
+  color: white;
 }
 
+/* UV Purple Button */
 .purple {
-    background-color: purple;
-    color: white; 
+  background-color: purple;
+  color: white;
 }
