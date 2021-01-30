@@ -1,7 +1,5 @@
 # Weather-Dashboard
 
-Week 6 UCF Coding Bootcamp Homework
-
 Create a weather dashboard with form inputs for a city search 
 - When a city is searched, user is presented with current and future conditions for that city 
 - The city is added to the search history
